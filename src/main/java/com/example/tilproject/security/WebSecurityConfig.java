@@ -5,6 +5,7 @@ import com.example.tilproject.controller.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @RequiredArgsConstructor
 @Configuration
@@ -30,29 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.cors().configurationSource(corsConfigurationSource());
         http.headers().frameOptions().disable();
-        http
+        http.authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
+                .antMatchers("/**.html").permitAll()
+                .antMatchers("/").permitAll()
 
-//                .authorizeRequests()
-//                // image 폴더를 login 없이 허용
-//                .antMatchers("/image/**").permitAll()
-//                // css 폴더를 login 없이 허용
-//                .antMatchers("/css/**").permitAll()
-//                .antMatchers("/userInfo/**").permitAll()
-//                .antMatchers("/h2-console/**").permitAll()
-//                .antMatchers("/sign-in").permitAll()
-//                .antMatchers("/").permitAll()
-//                .antMatchers("/js/**.js").permitAll()
-//                .antMatchers("/signup").permitAll()
-//                .antMatchers("/static/**.html").permitAll()
-//                .antMatchers("/**.html").permitAll()
-//                .antMatchers("/users").permitAll()
-//                .antMatchers("/admin/**").permitAll()
-//                .antMatchers("/roles").permitAll()
-//                // 그 외 모든 요청은 인증과정 필요
-//                .anyRequest().authenticated()
-//                .and()
+                .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
@@ -62,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedHandler(adminAccessHandler);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.cors();
     }
 
     @Bean
@@ -75,18 +63,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
 
 }
