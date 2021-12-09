@@ -38,7 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
                 .antMatchers("/**.html").permitAll()
                 .antMatchers("/").permitAll()
-
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/swagger-ui.html","/swagger-ui/**","/v3/api-docs/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -49,7 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .exceptionHandling().accessDeniedHandler(adminAccessHandler);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-//        http.cors();
     }
 
     @Bean
