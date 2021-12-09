@@ -1,0 +1,54 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // aws secrets
+    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.0.3'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws-secrets-manager-config:2.2.6.RELEASE'
+
+    //s3
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'io.jsonwebtoken:jjwt:0.9.1'
+    implementation 'org.json:json:20210307'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
+    //swagger api 자동화
+    implementation 'org.springdoc:springdoc-openapi-ui:1.5.13'
+
+    //api 추가시 필요한 validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.1'
+}
+
+jar {
+    enabled = false
+}
+
+
+test {
+    useJUnitPlatform()
+}
