@@ -31,7 +31,7 @@ public class AdminTurnController {
     @Secured("ROLE_ADMIN")
     @PostMapping("/admin/turn/{turnName}")
     public Long createTurn(@PathVariable String turnName){
-
+        log.info("{}", turnName);
         TurnRequestDto turnRequestDto = new TurnRequestDto(turnName);
         return adminTurnService.createTurn(turnRequestDto);
     }
