@@ -1,6 +1,7 @@
 package com.example.tilproject.domain;
 
 import com.example.tilproject.dto.BoardRequestDto;
+import com.example.tilproject.utils.BoardValidator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -37,8 +38,9 @@ public class Board extends Timestamped{
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-
     public Board(BoardRequestDto boardRequestDto, User user) {
+        BoardValidator.validateBoardCreate(boardRequestDto.getTitle(), boardRequestDto.getContent(), user);
+
         this.title = boardRequestDto.getTitle();
         this.content = boardRequestDto.getContent();
         this.boardIdx = boardRequestDto.getBoardIdx();
@@ -50,6 +52,8 @@ public class Board extends Timestamped{
     }
 
     public Board update(BoardRequestDto requestDto, User user) {
+        BoardValidator.validateBoardCreate(requestDto.getTitle(), requestDto.getContent(), user);
+
         this.title = requestDto.getTitle();
         this.content = requestDto.getContent();
         this.user = user;
