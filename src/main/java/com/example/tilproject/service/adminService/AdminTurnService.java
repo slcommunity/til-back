@@ -49,7 +49,7 @@ public class AdminTurnService {
             throw new IllegalArgumentException("존재하지 않는 기수입니다.");
         }
         else{
-            turn.setTurn(turnModifyDto.getNewTurn());
+            turn.update(turnModifyDto);
             return turn.getIdx();
         }
     }
@@ -65,6 +65,4 @@ public class AdminTurnService {
             return turn.getTurn();
         }
     }
-
-
 }
