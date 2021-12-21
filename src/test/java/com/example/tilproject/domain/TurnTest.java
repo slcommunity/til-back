@@ -17,7 +17,6 @@ class TurnTest {
     @DisplayName("Turn 생성")
     class CreateTurn{
 
-        private Long idx;
         private String turnName;
 
         @BeforeEach
@@ -25,6 +24,7 @@ class TurnTest {
 
             turnName = "1기";
         }
+
 
         @Test
         @DisplayName("정상 케이스")

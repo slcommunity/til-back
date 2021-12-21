@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Turn {
 
@@ -23,6 +23,7 @@ public class Turn {
     private Long idx;
 
     @Column(nullable = false)
+    @NotNull
     private String turn;
 
     @OneToMany(mappedBy = "turn", fetch = FetchType.LAZY)

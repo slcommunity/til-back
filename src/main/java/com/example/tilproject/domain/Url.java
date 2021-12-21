@@ -1,12 +1,14 @@
 package com.example.tilproject.domain;
 
+import com.example.tilproject.dto.UrlModifyDto;
+import com.example.tilproject.dto.UrlRequestDto;
+import com.example.tilproject.utils.UrlDomainValidator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-@Setter
 @Getter
 @Entity
 @NoArgsConstructor
@@ -17,22 +19,32 @@ public class Url {
     private Long idx;
 
     @Column(nullable = false)
+    @NotNull
     private String urlTurn;
 
     @Column(nullable = false)
+    @NotNull
     private String urlName;
 
+    @NotNull
     private String url;
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private UrlSection role;
+    @NotNull
+    private UrlSection urlSection;
 
-    public Url(String url, String urlName, String urlTurn, UrlSection role) {
-        this.urlTurn = urlTurn;
-        this.urlName = urlName;
-        this.url = url;
-        this.role = role;
+    public Url(UrlRequestDto urlRequestDto) {
+        UrlDomainValidator.validateCreateUrl(urlRequestDto);
+        this.urlTurn = urlRequestDto.getTurn();
+        this.urlName = urlRequestDto.getUrlName();
+        this.url = urlRequestDto.getUrl();
+        this.urlSection = urlRequestDto.getUrlSection();
     }
 
+    public void update(UrlModifyDto urlModifyDto){
+        UrlDomainValidator.validateUpdateUrl(urlModifyDto);
+        this.url = urlModifyDto.getTourl();
+        this.urlName = urlModifyDto.getTourlname();
+    }
 }

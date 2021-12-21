@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UrlCreateDeleteDto {
+public class UrlRequestDto {
     private String url;
     private String urlName;
-    private String Turn;
+    private String turn;
     private UrlSection urlSection;
 }

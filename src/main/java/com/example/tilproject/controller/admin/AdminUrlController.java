@@ -3,6 +3,7 @@ package com.example.tilproject.controller.admin;
 import com.example.tilproject.domain.UrlSection;
 import com.example.tilproject.dto.UrlCreateDeleteDto;
 import com.example.tilproject.dto.UrlModifyDto;
+import com.example.tilproject.dto.UrlRequestDto;
 import com.example.tilproject.dto.UrlTurnDto;
 import com.example.tilproject.service.adminService.AdminUrlService;
 import com.example.tilproject.utils.Result;
@@ -36,19 +37,16 @@ public class AdminUrlController {
     }
 
     //공지 작성
-    //ModelAttribute로 변경 예정, enum을 어떻게 받는지 공부
     @Secured("ROLE_ADMIN")
     @PostMapping("/admin/url")
-    public String createUrl(@RequestParam String url, @RequestParam String urlName, @RequestParam String turn, @RequestParam UrlSection urlSection){
-        UrlCreateDeleteDto urlCreateDeleteDto = new UrlCreateDeleteDto(url, urlName, turn, urlSection);
-        return adminUrlService.createUrl(urlCreateDeleteDto);
+    public String createUrl(@ModelAttribute UrlRequestDto urlRequestDto){
+        return adminUrlService.createUrl(urlRequestDto);
     }
 
     //공지 삭제
     @Secured("ROLE_ADMIN")
     @DeleteMapping("/admin/url")
-    public String deleteUrl(@RequestParam String url, @RequestParam String urlName, @RequestParam String turn, @RequestParam UrlSection urlSection){
-        UrlCreateDeleteDto urlCreateDeleteDto = new UrlCreateDeleteDto(url, urlName, turn, urlSection);
+    public String deleteUrl(@ModelAttribute UrlCreateDeleteDto urlCreateDeleteDto){
         return adminUrlService.deleteUrl(urlCreateDeleteDto);
     }
 

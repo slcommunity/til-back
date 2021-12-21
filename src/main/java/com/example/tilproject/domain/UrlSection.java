@@ -6,5 +6,4 @@ import java.util.Locale;
 
 public enum UrlSection {
     PRESENTATION, TIMEATTACK;
-
 }
