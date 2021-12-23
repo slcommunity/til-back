@@ -37,7 +37,6 @@ class BoardServiceTest {
 
     BoardRequestDto boardRequestDto;
     BoardRequestDto updateBoard;
-    BoardResponseDto boardResponseDto;
 
     @Nested
     @DisplayName("자유게시판 게시물")
