@@ -18,7 +18,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-
 public class Board extends Timestamped{
 
     @Id
