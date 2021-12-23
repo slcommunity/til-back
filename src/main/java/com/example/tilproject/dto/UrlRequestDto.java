@@ -1,11 +1,9 @@
 package com.example.tilproject.dto;
 
 import com.example.tilproject.domain.UrlSection;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor

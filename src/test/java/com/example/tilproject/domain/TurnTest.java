@@ -34,7 +34,7 @@ class TurnTest {
             //when
             Turn turn = new Turn(requestDto);
             //then
-            assertEquals(turnName, turn.getTurn());
+        assertEquals(turnName, turn.getTurn());
         }
 
         @Nested

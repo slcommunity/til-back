@@ -3,16 +3,14 @@ package com.example.tilproject.domain;
 import com.example.tilproject.dto.TurnModifyDto;
 import com.example.tilproject.dto.TurnRequestDto;
 import com.example.tilproject.utils.TurnValidator;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity
 @Getter
 @NoArgsConstructor
@@ -38,5 +36,11 @@ public class Turn {
     public void update(TurnModifyDto turnModifyDto){
         TurnValidator.validateTurnModify(turnModifyDto);
         this.turn = turnModifyDto.getNewTurn();
+    }
+
+    public Turn(Long idx, String turn, List<User> users) {
+        this.idx = idx;
+        this.turn = turn;
+        this.users = users;
     }
 }
