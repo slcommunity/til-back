@@ -41,6 +41,4 @@ public class Comment extends Timestamped {
         this.user = user;
 
     }
-
-
 }

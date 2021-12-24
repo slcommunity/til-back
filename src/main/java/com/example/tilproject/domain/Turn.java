@@ -1,18 +1,18 @@
 package com.example.tilproject.domain;
 
+import com.example.tilproject.dto.TurnModifyDto;
 import com.example.tilproject.dto.TurnRequestDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.tilproject.utils.TurnValidator;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 public class Turn {
 
@@ -21,19 +21,28 @@ public class Turn {
     private Long idx;
 
     @Column(nullable = false)
+    @NotNull
     private String turn;
 
     @OneToMany(mappedBy = "turn", fetch = FetchType.LAZY)
     List<User> users = new ArrayList<User>();
 
     public Turn(TurnRequestDto requestDto) {
-        if (requestDto.getTurnName() == null || requestDto.getTurnName().isEmpty()) {
-            throw new IllegalArgumentException("저장할 턴 이름이 없습니다.");
-        }
+        TurnValidator.validateTurnCreate(requestDto);
         this.turn = requestDto.getTurnName();
     }
     public Turn(String turn) {
         this.turn = turn;
     }
 
+    public void update(TurnModifyDto turnModifyDto){
+        TurnValidator.validateTurnModify(turnModifyDto);
+        this.turn = turnModifyDto.getNewTurn();
+    }
+
+    public Turn(Long idx, String turn, List<User> users) {
+        this.idx = idx;
+        this.turn = turn;
+        this.users = users;
+    }
 }
