@@ -32,6 +32,8 @@ public class Turn {
         }
         this.turn = requestDto.getTurnName();
     }
-
+    public Turn(String turn) {
+        this.turn = turn;
+    }
 
 }
