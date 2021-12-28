@@ -78,11 +78,12 @@ public class User extends Timestamped{
 
     public void update(String username, String name, String password, String blog, String github, String image){
         this.username = username;
-        this.password = password;
-        this.name = name;
-        this.blog = blog;
-        this.github = github;
-        this.image = image;
+
+        updateName(name);
+        updatePassword(password);
+        updateBlog(blog);
+        updateGithub(github);
+        updateImage(image);
     }
 
     public void updateName (String name){
