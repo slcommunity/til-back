@@ -1,5 +1,6 @@
 package com.example.tilproject.controller.admin;
 
+import com.example.tilproject.domain.NewPost;
 import com.example.tilproject.dto.TurnsGetDto;
 import com.example.tilproject.dto.TurnModifyDto;
 import com.example.tilproject.dto.TurnRequestDto;

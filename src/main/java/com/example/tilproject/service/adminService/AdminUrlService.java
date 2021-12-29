@@ -3,6 +3,7 @@ package com.example.tilproject.service.adminService;
 import com.example.tilproject.domain.Url;
 import com.example.tilproject.dto.UrlCreateDeleteDto;
 import com.example.tilproject.dto.UrlModifyDto;
+import com.example.tilproject.dto.UrlRequestDto;
 import com.example.tilproject.dto.UrlTurnDto;
 import com.example.tilproject.repository.adminRepository.UrlRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class AdminUrlService {
         if (urls == null) throw new IllegalArgumentException("해당하는 기수의 Url이 없습니다.");
         else {
             List<UrlTurnDto> urlTurnDtos = urls.stream()
-                    .map(m -> new UrlTurnDto(m.getUrl(), m.getUrlName(), m.getRole()))
+                    .map(m -> new UrlTurnDto(m.getUrl(), m.getUrlName(), m.getUrlSection()))
                     .collect(Collectors.toList());
             return urlTurnDtos;
         }
@@ -36,18 +37,16 @@ public class AdminUrlService {
         Url url = urlRepository.findByUrlAndUrlNameAndUrlTurn(urlModifyDto.getUrl(),
                                                                 urlModifyDto.getUrlname(),
                                                                 urlModifyDto.getTurn()).get();
-
-        url.setUrl(urlModifyDto.getTourl());
-        url.setUrlName(urlModifyDto.getTourlname());
+        url.update(urlModifyDto);
         return url.getUrlTurn();
     }
 
     @Transactional
-    public String createUrl(UrlCreateDeleteDto urlCreateDeleteDto) {
-        if (urlRepository.findByUrlAndUrlNameAndUrlTurn(urlCreateDeleteDto.getUrl(), urlCreateDeleteDto.getUrlName(), urlCreateDeleteDto.getTurn()).isPresent()) {
+    public String createUrl(UrlRequestDto urlRequestDto) {
+        if (urlRepository.findByUrlAndUrlNameAndUrlTurn(urlRequestDto.getUrl(), urlRequestDto.getUrlName(), urlRequestDto.getTurn()).isPresent()) {
             throw new IllegalArgumentException("이미 존재하는 Url입니다.");
         }
-        Url url = new Url(urlCreateDeleteDto.getUrl(), urlCreateDeleteDto.getUrlName(), urlCreateDeleteDto.getTurn(), urlCreateDeleteDto.getRole());
+        Url url = new Url(urlRequestDto);
         urlRepository.save(url);
         return url.getUrlName();
     }
@@ -55,7 +54,7 @@ public class AdminUrlService {
     @Transactional
     public String deleteUrl(UrlCreateDeleteDto urlCreateDeleteDto) {
         if (!urlRepository.findByUrlAndUrlNameAndUrlTurn(urlCreateDeleteDto.getUrl(), urlCreateDeleteDto.getUrlName(), urlCreateDeleteDto.getTurn()).isPresent()) {
-            throw new IllegalArgumentException("삭제할 Url이 없습니다..");
+            throw new IllegalArgumentException("삭제할 Url이 없습니다.");
         }
         Url url = urlRepository.findByUrlAndUrlNameAndUrlTurn(urlCreateDeleteDto.getUrl(), urlCreateDeleteDto.getUrlName(), urlCreateDeleteDto.getTurn()).get();
         urlRepository.delete(url);

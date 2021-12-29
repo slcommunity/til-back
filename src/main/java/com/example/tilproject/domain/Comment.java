@@ -1,6 +1,7 @@
 package com.example.tilproject.domain;
 
 import com.example.tilproject.dto.NewCommentRequestDto;
+import com.example.tilproject.utils.CommentValidator;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -33,11 +34,11 @@ public class Comment extends Timestamped {
     private User user;
 
     public Comment(NewCommentRequestDto requestDto, Board board, User user) {
+        CommentValidator.validateCommentCreate(requestDto.getContent(), user);
+
         this.content = requestDto.getContent();
         this.board = board;
         this.user = user;
 
     }
-
-
 }

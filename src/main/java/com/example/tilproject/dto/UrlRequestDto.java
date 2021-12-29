@@ -1,5 +1,6 @@
 package com.example.tilproject.dto;
 
+import com.example.tilproject.domain.UrlSection;
 import lombok.*;
 
 @Builder
@@ -7,10 +8,9 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UrlModifyDto {
-    private String urlname;
+public class UrlRequestDto {
     private String url;
-    private String tourl;
-    private String tourlname;
+    private String urlName;
     private String turn;
+    private UrlSection urlSection;
 }

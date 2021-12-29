@@ -1,11 +1,12 @@
 package com.example.tilproject.domain;
 
+import com.example.tilproject.utils.URLValidator;
+import com.example.tilproject.utils.UserValidator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class User extends Timestamped{
 
 
     public User(String username, String name, String password, UserRole role, String blog, String github, Turn turn, String image) {
+        UserValidator.validateCreateUser(username,  name,  password,  role,  blog,  github,  turn,  image);
+
         this.username = username;
         this.password = password;
         this.name = name;
@@ -75,10 +78,36 @@ public class User extends Timestamped{
 
     public void update(String username, String name, String password, String blog, String github, String image){
         this.username = username;
-        this.password = password;
+
+        updateName(name);
+        updatePassword(password);
+        updateBlog(blog);
+        updateGithub(github);
+        updateImage(image);
+    }
+
+    public void updateName (String name){
+        UserValidator.validateUpdateName(name);
         this.name = name;
+    }
+
+    public void updatePassword (String password){
+        UserValidator.validateUpdatePassword(password);
+        this.password = password;
+    }
+
+    public void updateBlog (String blog){
+        UserValidator.validateUpdateBlog(blog);
         this.blog = blog;
+    }
+
+    public void updateGithub (String github){
+        UserValidator.validateUpdateGithub(github);
         this.github = github;
+    }
+
+    public void updateImage (String image){
+        UserValidator.validateUpdateImage(image);
         this.image = image;
     }
 }

@@ -1,5 +1,6 @@
 package com.example.tilproject.domain;
 
+import com.example.tilproject.utils.NewPostValidator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,7 @@ public class NewPost{
     private User user;
 
     public NewPost(String title, String summary, String imageUrl, String postLink, User user) {
+        NewPostValidator.validateCreatePost(title, summary, imageUrl, postLink, user);
         this.title = title;
         this.summary = summary;
         this.imageUrl = imageUrl;
