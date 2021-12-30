@@ -24,9 +24,9 @@ public class UserValidator {
         if (!URLValidator.urlValidator(github)) {
             throw new ApiRequestException("깃헙 링크 가 유효하지 않습니다.");
         }
-        if (!URLValidator.urlValidator(image)) {
-            throw new ApiRequestException("이미지 링크 가 유효하지 않습니다.");
-        }
+//        if (!URLValidator.urlValidator(image)) {
+//            throw new ApiRequestException("이미지 링크 가 유효하지 않습니다.");
+//        }
         if (turn == null) {
             throw new ApiRequestException("회원 기수정보 가 유효하지 않습니다.");
         }
