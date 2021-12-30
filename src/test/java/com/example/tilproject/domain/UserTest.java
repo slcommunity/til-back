@@ -156,21 +156,21 @@ class UserTest {
                 }
             }
 
-            @Nested
-            @DisplayName("image")
-            class Image {
-
-                @Test
-                @DisplayName("URL 형식")
-                void fail_url_form() {
-                    image = "test_image";
-
-                    Exception exception = assertThrows(ApiRequestException.class,
-                            () -> new User(username, name, password, role, blog, github, turn, image));
-
-                    assertEquals(exception.getMessage(), "이미지 링크 가 유효하지 않습니다.");
-                }
-            }
+//            @Nested
+//            @DisplayName("image")
+//            class Image {
+//
+//                @Test
+//                @DisplayName("URL 형식")
+//                void fail_url_form() {
+//                    image = "test_image";
+//
+//                    Exception exception = assertThrows(ApiRequestException.class,
+//                            () -> new User(username, name, password, role, blog, github, turn, image));
+//
+//                    assertEquals(exception.getMessage(), "이미지 링크 가 유효하지 않습니다.");
+//                }
+//            }
 
             @Nested
             @DisplayName("turn")
